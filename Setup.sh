@@ -1,39 +1,42 @@
 #!/bin/bash
 
-# Update and upgrade system
-sudo apt update
-sudo apt upgrade -y
+echo "🚀 Starting Sentinel AI Setup..."
 
-# Install essential packages
-sudo apt install -y python3 python3-pip nodejs npm git docker.io
+# 1. Update & upgrade
+sudo apt-get update && sudo apt-get upgrade -y
 
-# Install PM2 globally for managing Node.js apps
-sudo npm install pm2 -g
+# 2. Install Node.js (LTS Version)
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-get install -y nodejs
 
-# Create a working directory
-mkdir -p /home/sentinel
-cd /home/sentinel
+# 3. Install Python 3.11+
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa -y
+sudo apt-get update
+sudo apt-get install -y python3.11 python3.11-venv python3.11-dev
 
-# Clone Sentinel AI repository
-# IMPORTANT: Replace this with your actual repo URL
-git clone https://github.com/yourgithubuser/SentinelAI.git
-cd SentinelAI
+# 4. Install Git
+sudo apt-get install -y git
 
-# Install Python dependencies if requirements.txt exists
-if [ -f "requirements.txt" ]; then
-    pip3 install -r requirements.txt
-fi
+# 5. (Optional) Install Docker
+sudo apt-get install -y docker.io
+sudo systemctl enable docker
+sudo systemctl start docker
 
-# Install Node dependencies if package.json exists
-if [ -f "package.json" ]; then
-    npm install
-fi
+# 6. Clone SentinelAI Repo
+mkdir -p ~/SentinelAI
+cd ~/SentinelAI
+git clone https://github.com/YourGitHubUser/SentinelAI-Repo.git || echo "Repo already cloned."
 
-# Optional: Start the application automatically
-# Uncomment the line you need:
-# pm2 start app.js  # For Node.js app
-# python3 app.py    # For Python app
+# 7. Basic Firewall Setup
+sudo ufw allow OpenSSH
+sudo ufw allow 80
+sudo ufw allow 443
+sudo ufw allow 3000
+sudo ufw allow 5000
+sudo ufw --force enable
 
-# Optional: Save PM2 process list and configure startup
-# pm2 save
-# pm2 startup
+# 8. Install Fail2ban (optional - protect SSH from brute force)
+sudo apt-get install -y fail2ban
+
+echo "✅ Sentinel AI Setup Complete!"
