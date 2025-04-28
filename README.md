@@ -1,2 +1,0 @@
-# SentinelAI-Setup
-Deployment Setup
