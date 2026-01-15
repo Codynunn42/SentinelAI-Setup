@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Coinbase Verification -->
+    <meta name="base:app_id" content="6939c0f3e6be54f5ed71d533" />
+
+    <title>Sentinel AI Consultation</title>
+
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3"></script>
+  </head>
+
+  <body>
+    <h1>Sentinel AI Consultation</h1>
+
+    <form id="payment-form">
+      <input
+        type="email"
+        id="email"
+        placeholder="Email address"
+        required
+      />
+
+      <div id="card-element"></div>
+      <div id="card-errors" style="color: red;"></div>
+
+      <button type="submit">Pay</button>
+    </form>
+
+    <!-- Your existing Stripe logic -->
+    <script src="/app.js"></script>
+  </body>
+</html>
